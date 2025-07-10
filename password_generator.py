@@ -21,9 +21,6 @@ def genpasswd(length=10):
     random.shuffle(password)
     return ''.join(password)
 
-@app.route('/')
-def index():
-    return render_template('webpage.html')
 
 @app.route('/generate')
 
