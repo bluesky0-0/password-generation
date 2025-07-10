@@ -25,7 +25,8 @@
                     alert('Password length must be at least 4 characters.');
                     return;
                 }
-                fetch(`/generate?length=${length}`)
+                fetch(`https://password-generation.onrender.com/generate?length=${length}`)
+
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('answer').value = data.password;
