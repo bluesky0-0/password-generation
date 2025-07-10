@@ -8,35 +8,31 @@
 <body>
     <h1>Password Generator</h1>
     
-        <label for="length">Length</label>
-        <input type="number" name="length" id="length" required>   
+    <label for="length">Length</label>
+    <input type="number" name="length" id="length" required>   
 
-        <button onclick="genpasswd()">Generate</button>
-        <br><br><br><br>
+    <button onclick="genpasswd()">Generate</button>
+    <br><br><br><br>
 
-        <label for="answer">Generated Password</label>
-        <input type="text" name="answer" id="answer">
+    <label for="answer">Generated Password</label>
+    <input type="text" name="answer" id="answer">
 
-        <script>
-    function genpasswd() {
-         fetch('/generate')
-        const length = document.getElementById('length').value;
+    <script>
+        function genpasswd() {
+            const length = document.getElementById('length').value;
 
-        if (length < 4) {
-            alert('Password length must be at least 4 characters.');
-            return;
+            if (length < 4) {
+                alert('Password length must be at least 4 characters.');
+                return;
+            }
+
+            fetch(`https://password-generation.onrender.com/generate?length=${length}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('answer').value = data.password;
+                })
+                .catch(error => console.error('Error:', error));
         }
-
-        fetch(`https://password-generation.onrender.com/generate?length=${length}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('answer').value = data.password;
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
-
-    
-    
+    </script>
 </body>
 </html>
