@@ -18,20 +18,32 @@
     <input type="text" name="answer" id="answer">
 
     <script>
-        function genpasswd() {
+       function genpasswd() {
             const length = document.getElementById('length').value;
 
             if (length < 4) {
-                alert('Password length must be at least 4 characters.');
+                alert("Password length must be at least 4 characters.");
                 return;
             }
 
             fetch(`https://password-generation.onrender.com/generate?length=${length}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('answer').value = data.password;
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
                 })
-                .catch(error => console.error('Error:', error));
+                .then(data => {
+                    if (data.password) {
+                        document.getElementById('answer').value = data.password;
+                    } else {
+                        document.getElementById('answer').value = "Error: No password returned";
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch error:", error);
+                    alert("Something went wrong fetching the password.");
+                });
         }
     </script>
 </body>
