@@ -1,9 +1,10 @@
+from flask_cors import CORS
 from flask import Flask, request, jsonify, render_template
 import random
 import string
 
 app = Flask(__name__)
-
+CORS(app)
 def genpasswd(length=10):
     if length < 4:
         raise ValueError('password length too short')
