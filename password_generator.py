@@ -28,8 +28,10 @@ def generate():
     length = request.args.get('length', default=10)
     try:
         length = int(length)
+        if length < 4:
+            return jsonify(error="Password must be at least 4 characters."), 400
     except ValueError:
-        return jsonify(error='Invalid length'), 400
+        return jsonify(error="Invalid length"), 400
     password = genpasswd(length)
     return jsonify(password=password)
 
